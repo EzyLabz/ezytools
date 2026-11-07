@@ -1,0 +1,16 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ezytools"
+version = "0.4.0"
+description = "A Python utility library for Yapper bot developers"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "LicenseRef-Proprietary"
+license-files = ["LICENSE"]
+dependencies = []
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ezytools"]
