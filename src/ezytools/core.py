@@ -1290,6 +1290,39 @@ def disconnect_members(bot, server_id, user_ids):
     return targets
 
 
+# ==================================================
+# DISPLAY HELPERS
+# ==================================================
+
+def format_count(count, singular, plural=None):
+    """Format a count with a label, such as '1 warning' or '2 warnings'."""
+    label = singular if count == 1 else (singular + 's' if plural is None else plural)
+    return f'{count:,} {label}'
+
+
+def format_list(items, conjunction='and'):
+    """Join items into readable text, such as 'red, blue, and green'."""
+    labels = [str(item) for item in items]
+    if len(labels) < 2:
+        return ''.join(labels)
+    if len(labels) == 2:
+        return f'{labels[0]} {conjunction} {labels[1]}'
+    return f'{", ".join(labels[:-1])}, {conjunction} {labels[-1]}'
+
+
+def progress_bar(current, total, width=10):
+    """Show progress with a fixed number of blocks and a percentage."""
+    if not math.isfinite(total) or total <= 0:
+        raise ValueError('total must be finite and positive')
+    if not math.isfinite(current):
+        raise ValueError('current must be finite')
+    if isinstance(width, bool) or not isinstance(width, int) or width <= 0:
+        raise ValueError('width must be a positive integer')
+    fraction = min(max(current, 0), total) / total
+    filled = int(fraction * width)
+    return f'{"█" * filled}{"░" * (width - filled)} {fraction:.0%}'
+
+
 # Keep implementation in this file; package __init__.py only re-exports it.
 __all__ = [
     name for name, value in list(globals().items())
